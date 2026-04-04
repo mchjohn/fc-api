@@ -20,6 +20,7 @@ model User {
 
   bankAccounts BankAccount[]
   categories   Category[]
+  transactions Transaction[]
 
   @@map("users")
 }
@@ -42,6 +43,8 @@ model BankAccount {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  transactions Transaction[]
+
   @@map("bank_accounts")
 }
 
@@ -53,5 +56,31 @@ model Category {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  transactions Transaction[]
+
   @@map("category")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+
+  @@map("transaction_type")
+}
+
+model Transaction {
+  id            String          @id @default(uuid()) @db.Uuid
+  userId        String          @default(uuid()) @map("user_id") @db.Uuid
+  categoryId    String          @default(uuid()) @map("category_id") @db.Uuid
+  bankAccountId String          @default(uuid()) @map("bank_account_id") @db.Uuid
+  name          String
+  value         Float
+  date          DateTime
+  type          TransactionType
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  bankAccount BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
 }
