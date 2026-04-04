@@ -19,6 +19,7 @@ model User {
   password String
 
   bankAccounts BankAccount[]
+  categories   Category[]
 
   @@map("users")
 }
@@ -42,4 +43,15 @@ model BankAccount {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("bank_accounts")
+}
+
+model Category {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @default(uuid()) @map("user_id") @db.Uuid
+  name   String
+  icon   String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("category")
 }
