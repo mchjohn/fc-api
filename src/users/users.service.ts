@@ -1,6 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/database/prisma.service';
+import { createHashPasswordasync } from 'src/utils/createHashPassword';
 
 @Injectable()
 export class UsersService {
@@ -17,11 +18,13 @@ export class UsersService {
       throw new ConflictException({ message: 'Este email já está em uso.' });
     }
 
+    const hashedPassword = await createHashPasswordasync(password);
+
     const user = this.prismaService.user.create({
       data: {
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password: hashedPassword,
       },
     });
     return user;
