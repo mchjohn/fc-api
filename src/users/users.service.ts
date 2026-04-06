@@ -25,6 +25,25 @@ export class UsersService {
         name,
         email,
         password: hashedPassword,
+        categories: {
+          createMany: {
+            data: [
+              // Income
+              { name: 'Salário', icon: 'travel', type: 'INCOME' },
+              { name: 'Freelance', icon: 'laptop', type: 'INCOME' },
+              { name: 'Investimentos', icon: 'trending-up', type: 'INCOME' },
+              { name: 'Venda', icon: 'shopping-bag', type: 'INCOME' },
+
+              // Expense
+              { name: 'Casa', icon: 'home', type: 'EXPENSE' },
+              { name: 'Alimentação', icon: 'coffee', type: 'EXPENSE' },
+              { name: 'Transporte', icon: 'car', type: 'EXPENSE' },
+              { name: 'Lazer', icon: 'smile', type: 'EXPENSE' },
+              { name: 'Saúde', icon: 'activity', type: 'EXPENSE' },
+              { name: 'Educação', icon: 'book', type: 'EXPENSE' },
+            ],
+          },
+        },
       },
     });
     return user;
