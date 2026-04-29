@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare } from 'bcrypt';
 import { UsersRepository } from 'src/shared/database/repositories/users.repositories';
-import { AuthenticateDto } from './dto/authenticate.dto';
+import { SigninDto } from './dto/signin.dto';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
@@ -14,8 +14,8 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  async authenticate(authenticateDto: AuthenticateDto) {
-    const { email, password } = authenticateDto;
+  async signin(signinDto: SigninDto) {
+    const { email, password } = signinDto;
 
     const user = await this.usersRepo.findUnique({
       where: { email },
