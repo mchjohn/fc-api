@@ -10,10 +10,11 @@ import { UsersModule } from '../users/users.module';
   imports: [
     UsersModule,
     JwtModule.registerAsync({
+      global: true,
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '5s' },
+        signOptions: { expiresIn: '30s' },
       }),
     }),
   ],

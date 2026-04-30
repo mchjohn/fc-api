@@ -49,4 +49,8 @@ export class UsersService {
     });
     return user;
   }
+
+  me(userId: string) {
+    return { userId };
+  }
 }
