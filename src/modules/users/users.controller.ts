@@ -1,14 +1,14 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 import { UsersService } from './users.service';
-import type { AuthenticatedRequest } from '../auth/interface/authenticated-request.interface';
+import { ActiveUserId } from 'src/shared/decorators/ActiveUserId';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('me')
-  getUserById(@Req() resquest: AuthenticatedRequest) {
-    return this.usersService.me(resquest.userId);
+  me(@ActiveUserId() userId: string) {
+    return this.usersService.getUserById(userId);
   }
 }

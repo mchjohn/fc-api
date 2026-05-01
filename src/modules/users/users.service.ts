@@ -1,4 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { createHashPasswordasync } from 'src/utils/createHashPassword';
 import { UsersRepository } from 'src/shared/database/repositories/users.repositories';
@@ -50,12 +51,10 @@ export class UsersService {
     return user;
   }
 
-  async me(userId: string) {
-    const user = await this.usersRepo.findUnique({
+  getUserById(userId: string) {
+    return this.usersRepo.findUnique({
       where: { id: userId },
-      omit: { password: true },
+      select: { name: true, email: true },
     });
-
-    return { user };
   }
 }
