@@ -50,7 +50,12 @@ export class UsersService {
     return user;
   }
 
-  me(userId: string) {
-    return { userId };
+  async me(userId: string) {
+    const user = await this.usersRepo.findUnique({
+      where: { id: userId },
+      omit: { password: true },
+    });
+
+    return { user };
   }
 }
