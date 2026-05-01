@@ -7,6 +7,7 @@ import { DatabaseModule } from './shared/database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { validate } from './shared/config/env';
 import { AuthGuard } from './modules/auth/auth.guard';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthGuard } from './modules/auth/auth.guard';
     UsersModule,
     DatabaseModule,
     AuthModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [
