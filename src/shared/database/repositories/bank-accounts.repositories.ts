@@ -15,11 +15,19 @@ export class BankAccountRepository {
     return this.prismaService.bankAccount.findFirst(findFirstDto);
   }
 
+  count(findFirstDto: Prisma.BankAccountCountArgs) {
+    return this.prismaService.bankAccount.count(findFirstDto);
+  }
+
   create(createDto: Prisma.BankAccountCreateArgs) {
     return this.prismaService.bankAccount.create(createDto);
   }
 
   update(updateDto: Prisma.BankAccountUpdateArgs) {
     return this.prismaService.bankAccount.update(updateDto);
+  }
+
+  delete(deleteDto: Prisma.BankAccountDeleteArgs) {
+    return this.prismaService.bankAccount.delete(deleteDto);
   }
 }
