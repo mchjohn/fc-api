@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { validate } from './shared/config/env';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { BankAccountsModule } from './modules/bank-accounts/bank-accounts.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
     DatabaseModule,
     AuthModule,
     CategoriesModule,
+    BankAccountsModule,
   ],
   controllers: [],
   providers: [
