@@ -9,6 +9,7 @@ import { validate } from './shared/config/env';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { BankAccountsModule } from './modules/bank-accounts/bank-accounts.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BankAccountsModule } from './modules/bank-accounts/bank-accounts.module
     AuthModule,
     CategoriesModule,
     BankAccountsModule,
+    TransactionsModule,
   ],
   controllers: [],
   providers: [
