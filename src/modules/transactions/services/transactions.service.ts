@@ -6,6 +6,7 @@ import { TransactionsRepository } from 'src/shared/database/repositories/transac
 import { ValidateBankAccountOwnerShipService } from 'src/modules/bank-accounts/services/validate-bank-account-ownership.service';
 import { ValidateCategoryOwnerShipService } from 'src/modules/categories/services/validate-category-ownership.service';
 import { ValidateTransactionOwnershipService } from './validate-transaction-ownership.service';
+import { TransactionType } from '../entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
@@ -16,8 +17,31 @@ export class TransactionsService {
     private readonly validateTransactionOwnershipService: ValidateTransactionOwnershipService,
   ) {}
 
-  findAllByUserId(userId: string) {
-    return this.transactionsRepo.findMany({ where: { userId } });
+  findAllByUserId(
+    userId: string,
+    {
+      month,
+      year,
+      type,
+      bankAccountId,
+    }: {
+      month: number;
+      year: number;
+      type?: TransactionType;
+      bankAccountId?: string;
+    },
+  ) {
+    return this.transactionsRepo.findMany({
+      where: {
+        userId,
+        type,
+        bankAccountId,
+        date: {
+          gte: new Date(Date.UTC(year, month)),
+          lt: new Date(Date.UTC(year, month + 1)),
+        },
+      },
+    });
   }
 
   findFirst(userId: string, transactionId: string) {
