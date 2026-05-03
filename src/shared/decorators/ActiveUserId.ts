@@ -1,9 +1,7 @@
-import {
-  createParamDecorator,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { AuthenticatedRequest } from 'src/modules/auth/interface/authenticated-request.interface';
+import type { ExecutionContext } from '@nestjs/common';
+import { createParamDecorator, UnauthorizedException } from '@nestjs/common';
+
+import type { AuthenticatedRequest } from 'src/modules/auth/interface/authenticated-request.interface';
 
 export const ActiveUserId = createParamDecorator<undefined>(
   (data, context: ExecutionContext) => {

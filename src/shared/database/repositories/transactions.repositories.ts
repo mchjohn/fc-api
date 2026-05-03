@@ -14,4 +14,12 @@ export class TransactionsRepository {
   findFirst(findFirstDto: Prisma.TransactionFindFirstArgs) {
     return this.prismaService.transaction.findFirst(findFirstDto);
   }
+
+  count(countDto: Prisma.TransactionCountArgs) {
+    return this.prismaService.transaction.count(countDto);
+  }
+
+  delete(deleteDto: Prisma.TransactionDeleteArgs) {
+    return this.prismaService.transaction.delete(deleteDto);
+  }
 }
