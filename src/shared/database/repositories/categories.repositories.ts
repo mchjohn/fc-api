@@ -10,4 +10,8 @@ export class CategoriesRepository {
   findMany(findManyDto: Prisma.CategoryFindManyArgs) {
     return this.prismaService.category.findMany(findManyDto);
   }
+
+  count(countDto: Prisma.CategoryCountArgs) {
+    return this.prismaService.category.count(countDto);
+  }
 }
