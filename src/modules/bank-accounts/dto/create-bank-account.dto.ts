@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-import { BankAccount } from '../entities/BankAccount';
+import { BankAccount } from '../entities/bank-account.entity';
 
 export class CreateBankAccountDto {
   @IsString({ message: 'Name is required' })
