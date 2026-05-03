@@ -12,7 +12,7 @@ export class ValidateBankAccountOwnerShipService {
     });
 
     if (exists === 0) {
-      throw new NotFoundException('Bank account not found.');
+      throw new NotFoundException('bank account not found.');
     }
   }
 }
