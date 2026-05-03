@@ -12,8 +12,10 @@ export class TransactionsService {
     return this.transactionsRepo.findMany({ where: { userId } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+  findFirst(userId: string, transactionId: string) {
+    return this.transactionsRepo.findFirst({
+      where: { userId, id: transactionId },
+    });
   }
 
   create(createTransactionDto: CreateTransactionDto) {

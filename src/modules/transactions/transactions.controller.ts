@@ -22,9 +22,12 @@ export class TransactionsController {
     return this.transactionsService.findAllByUserId(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionsService.findOne(+id);
+  @Get(':transactionId')
+  findOne(
+    @ActiveUserId() userId: string,
+    @Param('transactionId') transactionId: string,
+  ) {
+    return this.transactionsService.findFirst(userId, transactionId);
   }
 
   @Post()
