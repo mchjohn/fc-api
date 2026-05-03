@@ -3,13 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateTransactionDto } from '../dto/create-transaction.dto';
 import { UpdateTransactionDto } from '../dto/update-transaction.dto';
 import { TransactionsRepository } from 'src/shared/database/repositories/transactions.repositories';
-import { ValidateTransactionOwnerShipService } from './validate-transaction-ownership.service';
+import { ValidateBankAccountOwnerShipService } from 'src/modules/bank-accounts/services/validate-bank-account-ownership.service';
+import { ValidateCategoryOwnerShipService } from 'src/modules/categories/services/validate-category-ownership.service';
 
 @Injectable()
 export class TransactionsService {
   constructor(
     private readonly transactionsRepo: TransactionsRepository,
-    private readonly validateTransactionOwnership: ValidateTransactionOwnerShipService,
+    private readonly validateCategoryOwnership: ValidateCategoryOwnerShipService,
+    private readonly validateBankAccountOwnerShipService: ValidateBankAccountOwnerShipService,
   ) {}
 
   findAllByUserId(userId: string) {
@@ -22,8 +24,15 @@ export class TransactionsService {
     });
   }
 
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+  async create(userId: string, createTransactionDto: CreateTransactionDto) {
+    const { name, type, value, bankAccountId, categoryId, date } =
+      createTransactionDto;
+
+    await this.validateEntitiesOwnership({ userId, categoryId, bankAccountId });
+
+    return this.transactionsRepo.create({
+      data: { name, type, value, userId, bankAccountId, categoryId, date },
+    });
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
@@ -31,10 +40,23 @@ export class TransactionsService {
   }
 
   async remove(userId: string, transactionId: string) {
-    await this.validateTransactionOwnership.validate(userId, transactionId);
-
     return this.transactionsRepo.delete({
       where: { userId, id: transactionId },
     });
+  }
+
+  private async validateEntitiesOwnership({
+    userId,
+    categoryId,
+    bankAccountId,
+  }: {
+    userId: string;
+    categoryId: string;
+    bankAccountId: string;
+  }) {
+    await Promise.all([
+      this.validateBankAccountOwnerShipService.validate(userId, bankAccountId),
+      this.validateCategoryOwnership.validate(userId, categoryId),
+    ]);
   }
 }

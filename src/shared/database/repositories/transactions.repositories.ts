@@ -19,6 +19,10 @@ export class TransactionsRepository {
     return this.prismaService.transaction.count(countDto);
   }
 
+  create(createDto: Prisma.TransactionCreateArgs) {
+    return this.prismaService.transaction.create(createDto);
+  }
+
   delete(deleteDto: Prisma.TransactionDeleteArgs) {
     return this.prismaService.transaction.delete(deleteDto);
   }

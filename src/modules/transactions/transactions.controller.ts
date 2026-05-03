@@ -31,8 +31,11 @@ export class TransactionsController {
   }
 
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.create(createTransactionDto);
+  create(
+    @ActiveUserId() userId: string,
+    @Body() createTransactionDto: CreateTransactionDto,
+  ) {
+    return this.transactionsService.create(userId, createTransactionDto);
   }
 
   @Patch(':id')

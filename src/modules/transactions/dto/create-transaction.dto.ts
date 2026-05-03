@@ -1,19 +1,42 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
-import { Transaction } from '../entities/transaction.entity';
+import { TransactionType } from '../entities/transaction.entity';
 
 export class CreateTransactionDto {
-  @IsString({ message: 'Name is required' })
-  @IsNotEmpty({ message: 'Name is required' })
+  @IsUUID()
+  @IsString()
+  @IsNotEmpty({ message: 'bank account is required' })
+  bankAccountId: string;
+
+  @IsUUID()
+  @IsString()
+  @IsNotEmpty({ message: 'category is required' })
+  categoryId: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'name is required' })
   name: string;
 
   @IsNumber()
-  @IsNotEmpty({ message: 'Initital balance is required' })
+  @IsPositive()
+  @IsNotEmpty()
   value: number;
 
+  @IsDateString()
   @IsNotEmpty()
-  @IsEnum(Transaction, {
-    message: 'Type must be one of these values: [INCOME, EXPENSE]',
+  date: string;
+
+  @IsNotEmpty()
+  @IsEnum(TransactionType, {
+    message: 'type must be one of these values: [INCOME, EXPENSE]',
   })
-  type: Transaction;
+  type: TransactionType;
 }
