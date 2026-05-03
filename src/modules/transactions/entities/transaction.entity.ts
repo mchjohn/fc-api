@@ -1,1 +1,4 @@
-export class Transaction {}
+export enum Transaction {
+  INCOME = 'INCOME',
+  EXPENSE = 'EXPENSE',
+}
